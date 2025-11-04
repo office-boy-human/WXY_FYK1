@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>温馨提示</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #fffcf9;
+            font-family: "微软雅黑", sans-serif;
+        }
+
+        /* 弹窗样式 */
+        .popup {
+            position: absolute;
+            padding: 15px 25px;
+            color: white;
+            border-radius: 20px;
+            font-size: 16px;
+            width: 300px;
+            max-width: 90%;
+            word-wrap: break-word;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            animation: fadeIn 0.6s forwards, scaleIn 0.5s forwards;
+        }
+
+        /* 弹窗的出现动画 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* 弹窗的缩放效果 */
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.8);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        /* 弹窗的背景颜色渐变 */
+        .popup:nth-child(even) {
+            background: linear-gradient(45deg, #ff1493, #ff7f50);
+        }
+
+        .popup:nth-child(odd) {
+            background: linear-gradient(45deg, #1e90ff, #32cd32);
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    // 温馨提示列表（每条提示更长）
+    const tips = [
+        '多喝水哦~ 记得多吃水果，保持健康哦！', '要天天开心吖，笑一笑十年少~',
+        '每天都要元气满满，记得多锻炼，保持活力！', '记得吃水果，补充维生素，保持美丽！',
+        '保持好心情，生活充满阳光！', '照顾好自己，人生很短暂，照顾好自己才是最重要的！',
+        '我想你了，真的很想你，想见你！', '梦想成真，努力的日子不会辜负你！',
+        '期待下一次见面，真的希望见到你！', '宝宝我想你了，心里满满都是你！',
+        '顺顺利利，未来的每一步都平安顺利！', '早点休息，晚安，好梦！',
+        '愿所有烦恼都消失，生活平静幸福！', '别熬夜，身体最重要，要爱自己！',
+        '今天过得开心嘛？希望你天天开心！', '天冷了，多穿衣服，保重身体哦！'
+    ];
+
+    // 随机生成弹窗位置
+    function randomPosition() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const x = Math.random() * (width - 300); // 控制弹窗宽度
+        const y = Math.random() * (height - 100); // 控制弹窗高度
+        return { x: x, y: y };
+    }
+
+    // 创建弹窗
+    function createPopup() {
+        const popup = document.createElement('div');
+        const tip = tips[Math.floor(Math.random() * tips.length)];
+
+        popup.classList.add('popup');
+        popup.style.left = randomPosition().x + 'px';
+        popup.style.top = randomPosition().y + 'px';
+        popup.innerText = tip;
+
+        // 给弹窗设置随机颜色
+        const colors = ['#ff6347', '#ff1493', '#32cd32', '#1e90ff', '#ff7f50'];
+        popup.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+        document.body.appendChild(popup);
+
+        // 3秒后关闭弹窗
+        setTimeout(() => {
+            popup.style.opacity = 0;
+            setTimeout(() => document.body.removeChild(popup), 500);  // 完全消失后删除
+        }, 3000);
+    }
+
+    // 每隔200毫秒生成一个新的弹窗（间隔更长，避免频繁更新）
+    setInterval(createPopup, 200);
+</script>
+
+</body>
+</html>
